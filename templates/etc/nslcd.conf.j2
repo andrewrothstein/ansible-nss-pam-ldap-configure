@@ -1,0 +1,207 @@
+# This is the configuration file for the LDAP nameservice
+# switch library's nslcd daemon. It configures the mapping
+# between NSS names (see /etc/nsswitch.conf) and LDAP
+# information in the directory.
+# See the manual page nslcd.conf(5) for more information.
+
+# The user and group nslcd should run as.
+uid nslcd
+gid ldap
+
+# The uri pointing to the LDAP server to use for name lookups.
+# Multiple entries may be specified. The address that is used
+# here should be resolvable without using LDAP (obviously).
+#uri ldap://127.0.0.1/
+#uri ldaps://127.0.0.1/
+#uri ldapi://%2fvar%2frun%2fldapi_sock/
+# Note: %2f encodes the '/' used as directory separator
+uri {{nss_pam_ldap_uri|default('ldap://127.0.0.1/')}}
+
+# The LDAP version to use (defaults to 3
+# if supported by client library)
+#ldap_version 3
+
+# The distinguished name of the search base.
+base {{nss_pam_ldap_dn|default('dc=example,dc=com')}}
+
+# The distinguished name to bind to the server with.
+# Optional: default is to bind anonymously.
+{% if nss_pam_ldap_binddn is defined %}
+binddn {{nss_pam_ldap_binddn}}
+{% else %}
+#binddn cn=proxyuser,dc=example,dc=com
+{% endif %}
+
+# The credentials to bind with.
+# Optional: default is no credentials.
+# Note that if you set a bindpw you should check the permissions of this file.
+{% if nss_pam_ldap_bindpw is defined %}
+bindpw {{nss_pam_ldap_bindpw}}
+{% else %}
+#bindpw secret
+{% endif %}
+
+# The distinguished name to perform password modifications by root by.
+{% if nss_pam_ldap_rootpwmoddn is defined %}
+rootpwmoddn {{nss_pam_ldap_rootpwmoddn}}
+{% else %}
+#rootpwmoddn cn=admin,dc=example,dc=com
+{% endif %}
+
+# The default search scope.
+{% if nss_pam_ldap_scope is defined %}
+{% for s in nss_pam_ldap_scope %}
+scope {{s}}
+{% endfor %}
+{% else %}
+#scope sub
+#scope one
+#scope base
+{% endif %}
+
+# Customize certain database lookups.
+{% if nss_pam_ldap_custom_lookups is defined %}
+{% for m in nss_pam_ldap_custom_lookups %}
+{{m.db}} {{m.ty}} {{m.target}}
+{% endfor %}
+{% else %}
+#base   group  ou=Groups,dc=example,dc=com
+#base   passwd ou=People,dc=example,dc=com
+#base   shadow ou=People,dc=example,dc=com
+#scope  group  onelevel
+#scope  hosts  sub
+{% endif %}
+
+# Bind/connect timelimit.
+{% if nss_pam_ldap_bind_timelimit is defined %}
+bind_timelimit {{nss_pam_ldap_bind_timelimit}}
+{% else %}
+#bind_timelimit 30
+{% endif %}
+
+# Search timelimit.
+{% if nss_pam_ldap_timeout is defined %}
+timelimit {{nss_pam_ldap_timeout}}
+{% else %}
+#timelimit 30
+{% endif %}
+
+# Idle timelimit. nslcd will close connections if the
+# server has not been contacted for the number of seconds.
+{% if nss_pam_ldap_idle_timeout is defined %}
+{{nss_pam_ldap_ldap_idle_timeout}}
+{% else %}
+#idle_timelimit 3600
+{% endif %}
+
+# Use StartTLS without verifying the server certificate.
+{% if nss_pam_ldap_ssl is defined %}
+ssl {{nss_pam_ldap_ssl}}
+{% else %}
+#ssl start_tls
+{% endif %}
+{% if nss_pam_ldap_tls_reqcert is defined %}
+tls_reqcer {{nss_pam_ldap_tls_reqcert}}
+{% else %}
+#tls_reqcert never
+{% endif %}
+
+# CA certificates for server certificate verification
+{% if nss_pam_ldap_tls_cacertdir is defined %}
+tls_cacertdir {{nss_pam_ldap_tls_cacertdir}}
+{% else %}
+#tls_cacertdir /etc/ssl/certs
+{% endif %}
+{% if nss_pam_ldap_tls_cacertfile is defined %}
+tls_cacertfile {{nss_pam_ldap_tls_cacertfile}}
+{% else %}
+#tls_cacertfile /etc/ssl/ca.cert
+{% endif %}
+
+# Seed the PRNG if /dev/urandom is not provided
+#tls_randfile /var/run/egd-pool
+
+# SSL cipher suite
+# See man ciphers for syntax
+{% if nss_pam_ldap_tls_ciphers is defined %}
+tls_ciphers {{nss_pam_ldap_tls_ciphers}}
+{% else %}
+#tls_ciphers TLSv1
+{% endif %}
+
+# Client certificate and key
+# Use these, if your server requires client authentication.
+{% if nss_pam_ldap_tls_cert is defined %}
+tls_cer {{nss_pam_ldap_tls_cert}}
+{% else %}
+#tls_cert
+{% endif %}
+{% if nss_pam_ldap_tls_key is defined %}
+tls_key {{nss_pam_ldap_tls_key}}
+{% else %}
+#tls_key
+{% endif %}
+
+# Mappings for Services for UNIX 3.5
+#filter passwd (objectClass=User)
+#map    passwd uid              msSFU30Name
+#map    passwd userPassword     msSFU30Password
+#map    passwd homeDirectory    msSFU30HomeDirectory
+#map    passwd homeDirectory    msSFUHomeDirectory
+#filter shadow (objectClass=User)
+#map    shadow uid              msSFU30Name
+#map    shadow userPassword     msSFU30Password
+#filter group  (objectClass=Group)
+#map    group  member           msSFU30PosixMember
+
+# Mappings for Services for UNIX 2.0
+#filter passwd (objectClass=User)
+#map    passwd uid              msSFUName
+#map    passwd userPassword     msSFUPassword
+#map    passwd homeDirectory    msSFUHomeDirectory
+#map    passwd gecos            msSFUName
+#filter shadow (objectClass=User)
+#map    shadow uid              msSFUName
+#map    shadow userPassword     msSFUPassword
+#map    shadow shadowLastChange pwdLastSet
+#filter group  (objectClass=Group)
+#map    group  member           posixMember
+
+# Mappings for Active Directory
+#pagesize 1000
+#referrals off
+#idle_timelimit 800
+#filter passwd (&(objectClass=user)(!(objectClass=computer))(uidNumber=*)(unixHomeDirectory=*))
+#map    passwd uid              sAMAccountName
+#map    passwd homeDirectory    unixHomeDirectory
+#map    passwd gecos            displayName
+#filter shadow (&(objectClass=user)(!(objectClass=computer))(uidNumber=*)(unixHomeDirectory=*))
+#map    shadow uid              sAMAccountName
+#map    shadow shadowLastChange pwdLastSet
+#filter group  (objectClass=group)
+
+# Alternative mappings for Active Directory
+# (replace the SIDs in the objectSid mappings with the value for your domain)
+#pagesize 1000
+#referrals off
+#idle_timelimit 800
+#filter passwd (&(objectClass=user)(objectClass=person)(!(objectClass=computer)))
+#map    passwd uid           cn
+#map    passwd uidNumber     objectSid:S-1-5-21-3623811015-3361044348-30300820
+#map    passwd gidNumber     objectSid:S-1-5-21-3623811015-3361044348-30300820
+#map    passwd homeDirectory "/home/$cn"
+#map    passwd gecos         displayName
+#map    passwd loginShell    "/bin/bash"
+#filter group (|(objectClass=group)(objectClass=person))
+#map    group gidNumber      objectSid:S-1-5-21-3623811015-3361044348-30300820
+
+# Mappings for AIX SecureWay
+#filter passwd (objectClass=aixAccount)
+#map    passwd uid              userName
+#map    passwd userPassword     passwordChar
+#map    passwd uidNumber        uid
+#map    passwd gidNumber        gid
+#filter group  (objectClass=aixAccessGroup)
+#map    group  cn               groupName
+#map    group  gidNumber        gid
+# This comment prevents repeated auto-migration of settings.

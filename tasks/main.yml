@@ -1,0 +1,11 @@
+---
+- name: templatize
+  become: yes
+  become_user: root
+  with_items:
+    - { f: etc/nslcd.conf, m: '0600' }
+  template: >-
+    src={{item.f}}.j2
+    dest=/{{item.f}}
+    mode={{item.m}}
+    

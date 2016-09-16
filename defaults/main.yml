@@ -1,0 +1,30 @@
+---
+nss_pam_ldap_uri: ldap://127.0.0.1/
+nss_pam_ldap_dn: 'dc=example,dc=com'
+
+#nss_pam_ldap_binddn: 'cn=proxyuser,{{nss_pam_ldap_dn}}'
+#nss_pam_ldap_bindpw: 'secret'
+#nss_pam_ldap_rootpwmoddn: 'cn=admin,{{nss_pam_ldap_dn}}'
+
+#nss_pam_ldap_scope:
+#  - sub
+#  - one
+#  - base
+
+#nss_pam_ldap_custom_lookups:
+#  - base
+#    ty: group
+#    target: ou=Groups,dc=example,dc=com
+#  - db: base
+#    ty: passwd
+#    target: ou=People,dc=example,dc=com
+
+#nss_pam_ldap_bind_timelimit: 30
+#nss_pam_ldap_timelimit: 30
+#nss_pam_ldap_idle_timelimit: 3600
+
+#nss_pam_ldap_ssl: start_tls
+#nss_pam_ldap_tls_cacertdir: /etc/ssl/certs
+#nss_pam_ldap_tls_cacertfile: /etc/ssl/ca.cert
+#nss_pam_ldap_tls_ciphers: TLSv1
+#nss_pam_ldap_tls_cer: /etc/ssl/{{inventory-hostname}}-key.pem
