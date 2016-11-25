@@ -1,0 +1,37 @@
+---
+machine:
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - echo upgrading pip...
+    - sudo -H pip install --upgrade pip
+    - echo installing circleci-helpers
+    - sudo -H pip install circleci-helpers
+
+test:
+  override:
+    - ? | 
+          circle-matrix <<"EHD"
+            env:
+              - OS=centos_7
+              - OS=fedora_23
+              - OS=fedora_24
+              - OS=ubuntu_trusty
+              - OS=ubuntu_xenial
+
+            before_script:
+              - env | sort
+              - export UPSTREAM=andrewrothstein/docker-ansible-role
+
+            script:
+              - docker pull $UPSTREAM:$OS
+              - echo "FROM $UPSTREAM:$OS" > Dockerfile.$OS
+              - docker build -t $CIRCLE_PROJECT_REPONAME:$OS -f Dockerfile.$OS .
+
+            after_script:
+              - docker images
+          EHD
+      :
+        parallel: true
