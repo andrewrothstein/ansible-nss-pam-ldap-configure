@@ -101,7 +101,7 @@ ssl {{nss_pam_ldap_ssl}}
 #ssl start_tls
 {% endif %}
 {% if nss_pam_ldap_tls_reqcert is defined %}
-tls_reqcer {{nss_pam_ldap_tls_reqcert}}
+tls_reqcert {{nss_pam_ldap_tls_reqcert}}
 {% else %}
 #tls_reqcert never
 {% endif %}
