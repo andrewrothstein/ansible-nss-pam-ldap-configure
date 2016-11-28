@@ -5,10 +5,9 @@ machine:
 
 dependencies:
   pre:
-    - echo upgrading pip...
     - sudo -H pip install --upgrade pip
-    - echo installing circleci-helpers
-    - sudo -H pip install circleci-helpers
+    - sudo -H pip install circleci-helpers ansible-galaxy-local-deps
+    - ansible-galaxy-local-deps-write
 
 test:
   override:
@@ -26,12 +25,11 @@ test:
               - export UPSTREAM=andrewrothstein/docker-ansible-role
 
             script:
-              - docker pull $UPSTREAM:$OS
               - echo "FROM $UPSTREAM:$OS" > Dockerfile.$OS
               - docker build -t $CIRCLE_PROJECT_REPONAME:$OS -f Dockerfile.$OS .
 
             after_script:
-              - docker images
+              - docker images $CIRCLE_PROJECT_REPONAME:$OS
           EHD
       :
         parallel: true
