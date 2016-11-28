@@ -45,7 +45,7 @@ protocols:  {{nss_pam_ldap_nss_protocols | default(["files", "ldap"]) | join(" "
 rpc:        {{nss_pam_ldap_nss_rpc | default(["files", "ldap"]) | join(" ")}}
 services:   {{nss_pam_ldap_nss_services | default(["files", "ldap"]) | join(" ")}}
 
-netgroup:   {{nss_pam_ldap_nss_netgroup | default(["files", "ldap"]) | join(" ")}}
+netgroup:   {{nss_pam_ldap_nss_netgroup | default(["ldap"]) | join(" ")}}
 
 publickey:  {{nss_pam_ldap_nss_publickey | default(["files", "ldap"]) | join(" ")}}
 

@@ -45,7 +45,7 @@
 #nss_pam_ldap_nss_protocols: ['files', 'ldap']
 #nss_pam_ldap_nss_rpc: ['files', 'ldap']
 #nss_pam_ldap_nss_services: ['files', 'ldap']
-#nss_pam_ldap_nss_netgroup: ['files', 'ldap']
+#nss_pam_ldap_nss_netgroup: ['ldap']
 #nss_pam_ldap_nss_publickey: ['files', 'ldap']
 #nss_pam_ldap_nss_automount: ['files', 'ldap']
 #nss_pam_ldap_nss_aliases: ['files', 'ldap']
