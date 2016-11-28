@@ -1,4 +1,6 @@
 ---
+#nss_pam_ldap_uid: nslcd
+#nss_pam_ldap_gid: ldap
 #nss_pam_ldap_uri: ldap://127.0.0.1/
 #nss_pam_ldap_dn: 'dc=example,dc=com'
 
@@ -12,7 +14,7 @@
 #  - base
 
 #nss_pam_ldap_custom_lookups:
-#  - base
+#  - db: base
 #    ty: group
 #    target: ou=Groups,dc=example,dc=com
 #  - db: base
@@ -28,3 +30,24 @@
 #nss_pam_ldap_tls_cacertfile: /etc/ssl/ca.cert
 #nss_pam_ldap_tls_ciphers: TLSv1
 #nss_pam_ldap_tls_cer: /etc/ssl/{{inventory-hostname}}-key.pem
+
+#nss_pam_ldap_nss_passwd: ['files', 'ldap']
+#nss_pam_ldap_nss_shadow: ['files', 'ldap']
+#nss_pam_ldap_nss_group: ['files', 'ldap']
+#nss_pam_ldap_nss_hosts:
+#  - files
+#  - dns
+#  - myhostname
+#  - mymachines
+#  - ldap
+#nss_pam_ldap_nss_bootparams: ['files', 'ldap']
+#nss_pam_ldap_nss_ethers: ['files', 'ldap']
+#nss_pam_ldap_nss_protocols: ['files', 'ldap']
+#nss_pam_ldap_nss_rpc: ['files', 'ldap']
+#nss_pam_ldap_nss_services: ['files', 'ldap']
+#nss_pam_ldap_nss_netgroup: ['files', 'ldap']
+#nss_pam_ldap_nss_publickey: ['files', 'ldap']
+#nss_pam_ldap_nss_automount: ['files', 'ldap']
+#nss_pam_ldap_nss_aliases: ['files', 'ldap']
+
+#nss_pam_ldap_minimum_uid: 1000

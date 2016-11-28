@@ -30,33 +30,24 @@
 #shadow:    db files nisplus nis
 #group:     db files nisplus nis
 
-passwd:     files sss
-shadow:     files sss
-group:      files sss
+passwd:     {{nss_pam_ldap_nss_passwd | default(["files", "ldap"]) | join(" ")}}
+shadow:     {{nss_pam_ldap_nss_shadow | default(["files", "ldap"]) | join(" ")}}
+group:      {{nss_pam_ldap_nss_group | default(["files", "ldap"]) | join(" ")}}
 
-#hosts:     db files nisplus nis dns
-hosts:      files mdns4_minimal [NOTFOUND=return] dns myhostname mymachines
+hosts:      {{nss_pam_ldap_nss_hosts | default(["files", "dns", "myhostname", "mymachines", "ldap"]) | join(" ")}}
 
-# Example - obey only what nisplus tells us...
-#services:   nisplus [NOTFOUND=return] files
-#networks:   nisplus [NOTFOUND=return] files
-#protocols:  nisplus [NOTFOUND=return] files
-#rpc:        nisplus [NOTFOUND=return] files
-#ethers:     nisplus [NOTFOUND=return] files
-#netmasks:   nisplus [NOTFOUND=return] files
+bootparams: {{nss_pam_ldap_nss_bootparams | default(["files", "ldap"]) | join(" ")}}
 
-bootparams: nisplus [NOTFOUND=return] files
+ethers:     {{nss_pam_ldap_nss_ethers | default(["files", "ldap"]) | join(" ")}}
+netmasks:   {{nss_pam_ldap_nss_netmasks | default(["files", "ldap"]) | join(" ")}}
+networks:   {{nss_pam_ldap_nss_networks | default(["files", "ldap"]) | join(" ")}}
+protocols:  {{nss_pam_ldap_nss_protocols | default(["files", "ldap"]) | join(" ")}}
+rpc:        {{nss_pam_ldap_nss_rpc | default(["files", "ldap"]) | join(" ")}}
+services:   {{nss_pam_ldap_nss_services | default(["files", "ldap"]) | join(" ")}}
 
-ethers:     files
-netmasks:   files
-networks:   files
-protocols:  files
-rpc:        files
-services:   files sss
+netgroup:   {{nss_pam_ldap_nss_netgroup | default(["files", "ldap"]) | join(" ")}}
 
-netgroup:   files sss
+publickey:  {{nss_pam_ldap_nss_publickey | default(["files", "ldap"]) | join(" ")}}
 
-publickey:  nisplus
-
-automount:  files sss
-aliases:    files nisplus
+automount:  {{nss_pam_ldap_nss_automount | default(["files", "ldap"]) | join(" ")}}
+aliases:    {{nss_pam_ldap_nss_aliases | default(["files", "ldap"]) | join(" ")}}

@@ -1,0 +1,7 @@
+auth sufficient pam_ldap.so minimum_uid={{nss_pam_ldap_minimum_uid|default(1000)}} user_first_pass
+
+account sufficient pam_ldap.so minimum_uid={{nss_pam_ldap_minimum_uid|default(1000)}}
+
+session optional pam_ldap.so minimum_uid={{nss_pam_ldap_minimum_uid|default(1000)}}
+
+password sufficient pam_ldap.so minimum_uid={{nss_pam_ldap_minimum_uid|default(1000)}} try_first_pass
