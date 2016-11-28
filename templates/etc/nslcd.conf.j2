@@ -15,7 +15,7 @@ gid {{nss_pam_ldap_gid | default("ldap")}}
 #uri ldaps://127.0.0.1/
 #uri ldapi://%2fvar%2frun%2fldapi_sock/
 # Note: %2f encodes the '/' used as directory separator
-uri {{nss_pam_ldap_uri|default('ldap://127.0.0.1/')}}
+uri {{nss_pam_ldap_uri | default(['ldap://127.0.0.1/']) | join(" ")}}
 
 # The LDAP version to use (defaults to 3
 # if supported by client library)

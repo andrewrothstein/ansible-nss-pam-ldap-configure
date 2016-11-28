@@ -1,7 +1,7 @@
 ---
 #nss_pam_ldap_uid: nslcd
 #nss_pam_ldap_gid: ldap
-#nss_pam_ldap_uri: ldap://127.0.0.1/
+#nss_pam_ldap_uri: ["ldap://127.0.0.1/"]
 #nss_pam_ldap_dn: 'dc=example,dc=com'
 
 #nss_pam_ldap_binddn: 'cn=proxyuser,{{nss_pam_ldap_dn}}'
