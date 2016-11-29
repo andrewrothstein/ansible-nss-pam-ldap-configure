@@ -5,8 +5,8 @@
 # See the manual page nslcd.conf(5) for more information.
 
 # The user and group nslcd should run as.
-uid {{nss_pam_ldap_uid | default("nslcd")}}
-gid {{nss_pam_ldap_gid | default("ldap")}}
+uid {{nss_pam_ldap_uid | default(nss_pam_ldap_uid_default)}}
+gid {{nss_pam_ldap_gid | default(nss_pam_ldap_gid_default)}}
 
 # The uri pointing to the LDAP server to use for name lookups.
 # Multiple entries may be specified. The address that is used
