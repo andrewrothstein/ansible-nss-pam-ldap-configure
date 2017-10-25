@@ -80,16 +80,16 @@ bind_timelimit {{nss_pam_ldap_bind_timelimit}}
 {% endif %}
 
 # Search timelimit.
-{% if nss_pam_ldap_timeout is defined %}
-timelimit {{nss_pam_ldap_timeout}}
+{% if nss_pam_ldap_timelimit is defined %}
+timelimit {{nss_pam_ldap_timelimit}}
 {% else %}
 #timelimit 30
 {% endif %}
 
 # Idle timelimit. nslcd will close connections if the
 # server has not been contacted for the number of seconds.
-{% if nss_pam_ldap_idle_timeout is defined %}
-{{nss_pam_ldap_ldap_idle_timeout}}
+{% if nss_pam_ldap_idle_timelimit is defined %}
+idle_timelimit {{nss_pam_ldap_idle_timelimit}}
 {% else %}
 #idle_timelimit 3600
 {% endif %}
