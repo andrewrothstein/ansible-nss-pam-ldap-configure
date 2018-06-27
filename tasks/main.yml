@@ -1,23 +1,30 @@
 ---
 - name: resolve platform specific vars
-  include_vars: "{{item}}"
+  include_vars: '{{item}}'
   with_first_found:
-    - "{{ansible_distribution}}-{{ansible_distribution_release}}.yml"
-    - "{{ansible_distribution}}.yml"
-    - "{{ansible_os_family}}.yml"
+    - files:
+        - '{{ansible_distribution}}-{{ansible_distribution_release}}.yml'
+        - '{{ansible_distribution}}.yml'
+        - '{{ansible_os_family}}.yml'
+      skip: true
+      paths:
+        - '{{role_path}}/vars'
     
 - name: templatize
   become: yes
   become_user: root
   with_items:
-    - f: etc/nslcd.conf
+    - f: nslcd.conf
+      d: /etc
       m: '0600'
-    - f: etc/nsswitch.conf
+    - f: nsswitch.conf
+      d: /etc
       m: '0600'
-    - f: etc/pam.d/ldap
+    - f: ldap
+      d: /etc/pam.d
       m: '0600'
-  template: >-
-    src={{item.f}}.j2
-    dest=/{{item.f}}
-    mode={{item.m}}
+  template:
+    src: '{{item.f}}.j2'
+    dest: '{{item.d}}/{{item.f}}'
+    mode: '{{item.m}}'
     
