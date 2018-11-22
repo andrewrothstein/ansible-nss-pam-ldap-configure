@@ -9,7 +9,7 @@
       skip: true
       paths:
         - '{{role_path}}/vars'
-    
+
 - name: templatize
   become: yes
   become_user: root
@@ -27,4 +27,3 @@
     src: '{{item.f}}.j2'
     dest: '{{item.d}}/{{item.f}}'
     mode: '{{item.m}}'
-    

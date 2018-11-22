@@ -132,7 +132,7 @@ tls_ciphers {{nss_pam_ldap_tls_ciphers}}
 # Client certificate and key
 # Use these, if your server requires client authentication.
 {% if nss_pam_ldap_tls_cert is defined %}
-tls_cer {{nss_pam_ldap_tls_cert}}
+tls_cert {{nss_pam_ldap_tls_cert}}
 {% else %}
 #tls_cert
 {% endif %}
