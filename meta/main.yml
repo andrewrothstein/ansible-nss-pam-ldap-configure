@@ -7,18 +7,32 @@ galaxy_info:
     - MIT
   min_ansible_version: 2.0
   platforms:
-    - name: EL
+    - name: Alpine
       versions:
         - all
+    - name: Archlinux
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - buster
+        - stretch
+    - name: EL
+      versions:
+        - 7
+        - 8
     - name: Fedora
+      versions:
+        - 31
+        - 32
+    - name: Gentoo
       versions:
         - all
     - name: Ubuntu
       versions:
-        - all
-    - name: Alpine
-      versions:
-        - all
+        - bionic
+        - focal
+        - xenial
   galaxy_tags:
     - pam
     - auth
@@ -27,4 +41,4 @@ galaxy_info:
 
 dependencies:
   - role: andrewrothstein.nss-pam-ldap
-    version: v1.0.3
+    version: v1.0.4
