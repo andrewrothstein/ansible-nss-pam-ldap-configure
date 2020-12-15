@@ -142,6 +142,10 @@ tls_key {{nss_pam_ldap_tls_key}}
 #tls_key
 {% endif %}
 
+{% for mapping in nss_pam_ldap_tls_mappings | default([]) %}
+map   {{ mapping.db }} {{ mapping.field }}      {{ mapping.mapped_to }}
+{% endfor %}
+
 # Mappings for Services for UNIX 3.5
 #filter passwd (objectClass=User)
 #map    passwd uid              msSFU30Name
