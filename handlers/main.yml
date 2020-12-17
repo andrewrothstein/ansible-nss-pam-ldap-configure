@@ -1,6 +1,7 @@
 ---
 # handlers file for nss-pam-ldap
 - name: restart nslcd
+  when: nss_pam_ldap_activate
   service:
     name: nslcd
     state: restarted

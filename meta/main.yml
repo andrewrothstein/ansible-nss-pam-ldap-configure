@@ -41,4 +41,4 @@ galaxy_info:
 
 dependencies:
   - role: andrewrothstein.nss-pam-ldap
-    version: v1.0.4
+    version: v1.0.5

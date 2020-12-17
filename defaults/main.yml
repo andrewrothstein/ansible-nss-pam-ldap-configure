@@ -51,3 +51,5 @@
 #nss_pam_ldap_nss_aliases: ['files', 'ldap']
 
 #nss_pam_ldap_minimum_uid: 1000
+
+nss_pam_ldap_activate: True
