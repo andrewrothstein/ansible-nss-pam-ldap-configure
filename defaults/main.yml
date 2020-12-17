@@ -56,3 +56,5 @@
 #   - db: passwd
 #     field: loginShell
 #     mapped_to: "\"/bin/bash\""
+
+nss_pam_ldap_activate: True

@@ -16,14 +16,21 @@
   with_items:
     - f: nslcd.conf
       d: /etc
-      m: '0600'
     - f: nsswitch.conf
       d: /etc
       m: '0644'
     - f: ldap
       d: /etc/pam.d
-      m: '0600'
   template:
     src: '{{ item.f }}.j2'
     dest: '{{ item.d }}/{{ item.f }}'
-    mode: '{{ item.m }}'
+    mode: '{{ item.m | default("0600") }}'
+  notify: restart nslcd
+
+- name: start service
+  become: yes
+  become_user: root
+  when: nss_pam_ldap_activate
+  service:
+    name: nslcd
+    state: started
