@@ -25,6 +25,7 @@
     src: '{{ item.f }}.j2'
     dest: '{{ item.d }}/{{ item.f }}'
     mode: '{{ item.m | default("0600") }}'
+    backup: '{{ nss_pam_ldap_backup_files }}'
   notify: restart nslcd
 
 - name: start service
