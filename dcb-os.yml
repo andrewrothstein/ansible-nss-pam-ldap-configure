@@ -8,7 +8,6 @@
 - debian_stretch
 - fedora_31
 - fedora_32
-- gentoo_latest
 - ubuntu_bionic
 - ubuntu_focal
 - ubuntu_xenial
