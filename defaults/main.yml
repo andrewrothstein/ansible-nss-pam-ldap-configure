@@ -58,3 +58,4 @@
 #     mapped_to: "\"/bin/bash\""
 
 nss_pam_ldap_activate: True
+nss_pam_ldap_backup_files: False
